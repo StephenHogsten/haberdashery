@@ -29,7 +29,6 @@ export async function* paginationGenerator<T = PageObjectResponse>(
   const params = { ...baseParams };
   while (true) {
     const resp = await notion.databases.query(params);
-    console.log("one query with", params);
     yield resp.results as T[];
     if (!resp.has_more || !resp.next_cursor) {
       break;

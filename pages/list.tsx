@@ -11,8 +11,6 @@ enum NOTION_ENDPOINTS {
 const List = () => {
   const { data, error } = useSwr("/api/query");
 
-  const 
-
   console.log("data", data);
   console.log("error", error);
 

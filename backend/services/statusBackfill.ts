@@ -13,10 +13,8 @@ export async function backfill() {
   const updateResp = await Promise.all(tasks.map(setExpectedIcon));
   if (nextCursor) {
     set(REDIS_CURSOR_KEY, nextCursor);
-    console.log("nextCursor", nextCursor);
   } else {
     set(REDIS_CURSOR_KEY, "DONE");
-    console.log("last one");
   }
   return zip(tasks, updateResp);
 }

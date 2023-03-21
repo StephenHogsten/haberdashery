@@ -1,4 +1,4 @@
-import notion, {
+import {
   CURRENT_GTD_DB,
   NotionQueryParams,
   paginationGenerator,
@@ -19,13 +19,8 @@ export async function catchUpIcons({
   for await (const taskPages of paginationGenerator<TaskPage>(
     await baseParams(firstTimestamp, lastTimestamp)
   )) {
-    console.log(
-      "taskPages",
-      taskPages.map((t) => t.last_edited_time)
-    );
     promises = promises.concat(taskPages.map(setExpectedIcon));
   }
-  console.log("promises", promises);
   const results = await Promise.all(promises);
   await set(REDIS_TIMESTAMP_KEY, lastTimestamp);
   return {
