@@ -1,3 +1,25 @@
+## Running
+
+- start Next: `yarn dev`
+- start Redis: `yarn redis`
+  - **_note_**: I tried to run with concurrently but docker didn't like it
+    - TODO: could run both with docker and startup with docker compose
+  - **_note_**: the data isn't actually persisting at the moment after I stop it
+    - TODO: could have a docker-compose volume
+
+## Notable endpoints
+
+- `/api/catchup`: based on the last timestamp stored (or 24 hours by default), update statuses
+  - can pass values in with commenting
+  - will update redis theoretically
+- `/api/redis`: check what's currently stored
+- `/api/test`: for messing aroudn with whatever
+- `/api/query`: basically also for messing around with whatever at this point
+- `/api/backfill`: used for populating all icons based on creation time. Probably wouldn't need it again
+
+---
+
+\*\*\*original Next
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
