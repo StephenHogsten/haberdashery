@@ -1,3 +1,9 @@
+# README
+
+This repo is to collect small code enhancements to notion.
+
+Currently the primary enhancement is to automatically update icons of pages in a database based on some logic. Initial version is hardcoded for tasks, later it will be more extensible.
+
 ## Running
 
 - start Next: `yarn dev`
