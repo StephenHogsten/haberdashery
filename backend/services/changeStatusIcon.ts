@@ -21,6 +21,7 @@ export type TaskPage = Omit<PageObjectResponse, "properties"> & {
 export async function setExpectedIcon(page: TaskPage) {
   try {
     const expectedIcon = getExpectedIcon(page);
+    console.log("page", page, page.properties.Name.title, expectedIcon);
     if (shouldUpdateIcon(page, expectedIcon)) {
       await updatePageEmoji(page.id, expectedIcon);
       return true;
@@ -32,7 +33,7 @@ export async function setExpectedIcon(page: TaskPage) {
   }
 }
 
-const ResettableIcons = ["⬜", "🥧", "⏰", "⏳", "🚫", "⁉️", "🤷"];
+const ResettableIcons = ["✅", "⬜", "🥧", "⏰", "⏳", "🚫", "⁉️", "🤷"];
 
 function shouldUpdateIcon(page: TaskPage, expectedIcon: Emoji) {
   if (page.icon === null) {
