@@ -1,5 +1,12 @@
 import { createClient } from "redis";
 
+// TODO: refactor this
+// persistence/
+//   providers/redis.ts
+//   task_timestamps/
+//      index
+//      redis
+
 const client = createClient();
 client.on("error", (err) => console.log("Redis Client Error", err));
 

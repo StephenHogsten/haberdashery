@@ -3,8 +3,11 @@ import {
   NotionQueryParams,
   paginationGenerator,
 } from "backend/notion";
+import { get, set } from "backend/redis";
 import sub from "date-fns/sub";
 import { setExpectedIcon, TaskPage } from "./changeStatusIcon";
+
+const REDIS_TIMESTAMP_KEY = "MOST_RECENT_UPDATED_AT";
 
 export async function catchUpIcons({
   firstTimestamp = "",
@@ -19,6 +22,7 @@ export async function catchUpIcons({
     promises = promises.concat(taskPages.map(setExpectedIcon));
   }
   const results = await Promise.all(promises);
+  await set(REDIS_TIMESTAMP_KEY, lastTimestamp);
   return {
     updated: results.filter((x) => x).length,
     skipped: results.filter((x) => !x).length,
@@ -50,6 +54,10 @@ async function baseParams(firstTimestamp: string, lastTimestamp: string) {
 
 async function getTimestamp() {
   // default to 24 hours ago
-  const d = sub(new Date(), { hours: 26 });
+  const existingTimestamp: string | null = await get(REDIS_TIMESTAMP_KEY);
+  if (existingTimestamp) {
+    return existingTimestamp;
+  }
+  const d = sub(new Date(), { days: 1 });
   return d.toISOString();
 }

@@ -15,22 +15,6 @@ const DB_CURRENT_ID = "eb9dbd9cb54c41e9bd751c85e59a9e9b";
 
 const DB_ID = process.env.NOTION_DB_ID || "";
 
-async function* genEntries(): AsyncIterable<QueryDatabaseResponse> {
-  let hasMore = true;
-  let cursor = "";
-  while (hasMore) {
-    const data = await notion.databases.query({
-      database_id: DB_ID,
-      start_cursor: cursor,
-    });
-    yield data;
-    hasMore = data.has_more;
-    if (hasMore) {
-      cursor = data.next_cursor || "";
-    }
-  }
-}
-
 async function simpleQuery(databaseId: string) {
   return notion.databases.query({
     database_id: databaseId,
