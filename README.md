@@ -23,6 +23,10 @@ Currently the primary enhancement is to automatically update icons of pages in a
 - `/api/backfill`: used for populating all icons based on creation time. Probably wouldn't need it again
 - `/list`: originally planned this for a better GTD interface, this was the beginnings there
 
+## Vercel
+
+- configured to trigger catchup at 12:30 am daily
+
 ## TODO
 
 - deploy
