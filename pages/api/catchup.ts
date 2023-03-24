@@ -1,7 +1,7 @@
 import { catchUpIcons } from "backend/services/catchUpIcons";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
-async function CatchUp(req: NextApiRequest, res: NextApiResponse) {
+const CatchUp: NextApiHandler = async (req, res) => {
   // const afterYesterday = "2023-03-20T22:00:00.000Z";  // 3/20 at 3p
   // const beforeNow = "2023-03-21T18:00:04.841Z"; // 3/21 at 11a
 
@@ -10,6 +10,6 @@ async function CatchUp(req: NextApiRequest, res: NextApiResponse) {
     // lastTimestamp: beforeNow,
   });
   res.status(200).json(resp);
-}
+};
 
 export default CatchUp;

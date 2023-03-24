@@ -1,4 +1,5 @@
 import { get, save, set } from "backend/redis";
+import { DevOnly } from "backend/routeHelpers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const REDIS_TIMESTAMP_KEY = "MOST_RECENT_UPDATED_AT";
@@ -27,4 +28,4 @@ async function clear(res: NextApiResponse) {
   res.status(200).json({ status: "cleared" });
 }
 
-export default Redis;
+export default DevOnly(Redis);

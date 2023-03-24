@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Client } from "@notionhq/client";
+import { DevOnly } from "backend/routeHelpers";
 
 const DB_ID = "88848413-60ab-4a03-b882-b3a07b678204";
 
@@ -12,4 +13,4 @@ async function ListDb(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json(data);
 }
 
-export default ListDb;
+export default DevOnly(ListDb);

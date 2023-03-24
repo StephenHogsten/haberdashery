@@ -1,4 +1,5 @@
 import { QueryDatabaseResponse } from "@notionhq/client/build/src/api-endpoints";
+import { DevOnly } from "backend/routeHelpers";
 import { NextApiRequest, NextApiResponse } from "next";
 import { notion } from "../../backend/notion";
 
@@ -40,4 +41,4 @@ async function QueryDb(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json(data2);
 }
 
-export default QueryDb;
+export default DevOnly(QueryDb);

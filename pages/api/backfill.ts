@@ -1,3 +1,4 @@
+import { DevOnly } from "backend/routeHelpers";
 import { backfill } from "backend/services/statusBackfill";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -6,4 +7,4 @@ async function Backfill(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json(resp);
 }
 
-export default Backfill;
+export default DevOnly(Backfill);

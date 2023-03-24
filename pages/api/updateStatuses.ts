@@ -1,3 +1,4 @@
+import { DevOnly } from "backend/routeHelpers";
 import { NextApiRequest, NextApiResponse } from "next";
 
 // TODO:
@@ -9,4 +10,4 @@ async function UpdateStatuses(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json({});
 }
 
-export default UpdateStatuses;
+export default DevOnly(UpdateStatuses);

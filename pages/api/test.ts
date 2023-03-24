@@ -1,4 +1,5 @@
 import { CURRENT_GTD_DB, notion, updatePageEmoji } from "backend/notion";
+import { DevOnly } from "backend/routeHelpers";
 import { setExpectedIcon, TaskPage } from "backend/services/changeStatusIcon";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -43,4 +44,4 @@ async function Test(req: NextApiRequest, res: NextApiResponse) {
   res.status(200).json(pages);
 }
 
-export default Test;
+export default DevOnly(Test);
