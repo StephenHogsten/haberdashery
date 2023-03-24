@@ -32,11 +32,19 @@ export async function setExpectedIcon(page: TaskPage) {
   }
 }
 
+const ResettableIcons = ["⬜", "🥧", "⏰", "⏳", "🚫", "⁉️", "🤷"];
+
 function shouldUpdateIcon(page: TaskPage, expectedIcon: Emoji) {
   if (page.icon === null) {
     return true;
   }
-  return page.icon.type === "emoji" && page.icon.emoji !== expectedIcon; // not changing external or file icons
+  // not changing external or file icons
+  // only changing when it's currently an auto-set icon
+  return (
+    page.icon.type === "emoji" &&
+    page.icon.emoji !== expectedIcon &&
+    ResettableIcons.includes(page.icon.emoji)
+  );
 }
 
 function getExpectedIcon(page: TaskPage): Emoji {
