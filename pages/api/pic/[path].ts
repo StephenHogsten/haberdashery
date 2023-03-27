@@ -3,12 +3,13 @@ import { catchUpIcons } from "backend/services/catchUpIcons";
 import { Readable } from "stream";
 
 async function Pic(req: NextApiRequest, res: NextApiResponse) {
+  const path = req.url?.split("/").pop()!;
   try {
     const base =
       process.env.VERCEL_ENV === "production"
         ? "https://" + process.env.VERCEL_URL
         : "http://" + process.env.VERCEL_URL;
-    const url = new URL("/thumbs_up.jpeg", base).toString();
+    const url = new URL(path, base).toString();
     console.log("url", url);
     await Promise.all([
       catchUpIcons().then((resp) => console.log("resp", resp)),
