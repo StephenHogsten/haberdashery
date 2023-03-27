@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import type { ReadStream } from "fs";
 import { catchUpIcons } from "backend/services/catchUpIcons";
+import { Readable } from "stream";
 // import img from "./thumbs_up.jpeg";
 
 async function Pic(req: NextApiRequest, res: NextApiResponse) {
@@ -10,25 +11,32 @@ async function Pic(req: NextApiRequest, res: NextApiResponse) {
         ? "https://" + process.env.VERCEL_URL
         : "http://" + process.env.VERCEL_URL;
     const url = new URL("/thumbs_up.jpeg", base).toString();
+    console.log("url", url);
     await Promise.all([
       catchUpIcons().then((resp) => console.log("resp", resp)),
-      fetch(url).then((fetchResp) => {
+      fetch(url).then(async (fetchResp) => {
+        // const reader = fetchResp.body?.getReader();
+        for await (const chunk of fetchResp.body as unknown as Iterable<Readable>) {
+          res.write(chunk);
+        }
+        res.status(200);
         // const x = createReadStream(fetchResp.body)
         // this can end er
-        return new Promise((resolve, reject) => {
-          (fetchResp.body as unknown as ReadStream)
-            .pipe(res)
-            .on("close", () => {
-              console.log("success end");
-              resolve(true);
-            })
-            .on("error", (e) => {
-              console.error("error", e);
-              reject(e);
-            });
-        });
+        // return new Promise((resolve, reject) => {
+        //   Readable.fromWeb
+        //     .pipe(res)
+        //     .on("close", () => {
+        //       console.log("success end");
+        //       resolve(true);
+        //     })
+        //     .on("error", (e) => {
+        //       console.error("error", e);
+        //       reject(e);
+        //     });
+        // });
       }),
     ]);
+    res.end();
   } catch (e) {
     console.error("e", e);
     res.status(500).end();
