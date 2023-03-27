@@ -9,7 +9,7 @@ async function Pic(req: NextApiRequest, res: NextApiResponse) {
       process.env.VERCEL_ENV === "production"
         ? "https://" + process.env.VERCEL_URL
         : "http://" + process.env.VERCEL_URL;
-    const url = new URL("/thumbs_up.jpeg", base);
+    const url = new URL("/thumbs_up.jpeg", base).toString();
     await Promise.all([
       catchUpIcons().then((resp) => console.log("resp", resp)),
       fetch(url).then((fetchResp) => {
